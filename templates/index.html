@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1 id="date-header">My To-Do List for {{ today }}</h1>
+        <nav class="nav-links">
+            <!-- Links on the left side -->
+            <div class="nav-left">
+                <a href="/list-history" class="nav-link">List History</a>
+                <a href="/new-list" class="nav-link">+ New List</a>
+                <button class="save-list-btn">Save This List</button>
+            </div>
+
+            <!-- Links on the right side -->
+            <div class="nav-right">
+                {% if session.user_id %}
+                    <a href="/logout" class="nav-link">Log Out</a>
+                {% else %}
+                    <a href="/login" class="nav-link">Log in</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="content">
+        <input type="text" class="new-task-input" placeholder="Write your next task here...">
+        <ul id="task-list" class="task-list">
+            <!-- Example task item -->
+            <li class="task-item">
+                <span class="drag-handle">::</span>
+                <input type="checkbox" class="task-checkbox">
+                <span class="task-name">Task 1</span>
+                <span class="delete-task">Delete</span>
+            </li>
+        </ul>
+
+        <!-- Hidden form for saving the list -->
+        <form id="save-task-list-form" action="{{ url_for('save_list') }}" method="POST" style="display:none;">
+            <input type="text" name="list_name" id="list-name" value="">
+            <input type="hidden" name="task_list" id="task-list-data" value="">
+        </form>
+    </main>
+
+    <footer class="footer"></footer>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Set the current date in the header
+            const options = { weekday: 'short', year: 'numeric', month: '2-digit', day: '2-digit' };
+            const today = new Date().toLocaleDateString('en-US', options);
+            $('#date-header').text(`My To-Do List for ${today}`);
+
+            // Initialize sortable for draggable tasks, restrict movement to vertical axis
+            $("#task-list").sortable({
+                handle: ".drag-handle",
+                axis: "y",
+                containment: "parent",
+                tolerance: "pointer",
+                revert: true,
+                helper: "clone"
+            });
+
+            // Add a new task when the user presses Enter
+            $('.new-task-input').keypress(function(e) {
+                if (e.which == 13) { // Enter key pressed
+                    const taskText = $(this).val().trim();
+                    if (taskText !== '') {
+                        const newTask = `
+                            <li class="task-item">
+                                <span class="drag-handle">::</span>
+                                <input type="checkbox" class="task-checkbox">
+                                <span class="task-name">${taskText}</span>
+                                <span class="delete-task">Delete</span>
+                            </li>
+                        `;
+                        $('#task-list').append(newTask);
+                        $(this).val(''); // Clear input
+                    }
+                }
+            });
+
+            // Save list to the database
+            $('.save-list-btn').click(function() {
+                const tasks = [];
+                $('#task-list li').each(function() {
+                    tasks.push($(this).find('.task-name').text());
+                });
+
+                if (tasks.length > 0) {
+                    const listName = prompt("Enter a name for this list:");
+
+                    if (listName) {
+                        $('#list-name').val(listName); // Set list name
+                        $('#task-list-data').val(JSON.stringify(tasks)); // Set tasks as JSON string
+                        $('#save-task-list-form').submit(); // Submit the form
+                    }
+                } else {
+                    alert("Your list is empty. Please add tasks before saving.");
+                }
+            });
+
+            // Delete task on clicking the delete button
+            $(document).on('click', '.delete-task', function() {
+                $(this).closest('.task-item').remove();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task List History</title>
+</head>
+<body>
+    <h1>Your Saved Task Lists</h1>
+
+    <ul>
+        {% for task_list in task_lists %}
+            <li>
+                <strong>{{ task_list.list_name }}</strong>
+                <ul>
+                    {% for task in task_list.tasks %}
+                        <li>{{ task }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% else %}
+            <p>No saved lists yet.</p>
+        {% endfor %}
+    </ul>
+
+    <p><a href="{{ url_for('index') }}">Back to the Main Page</a></p>
+    <p><a href="{{ url_for('logout') }}">Log Out</a></p>
+</body>
+</html>

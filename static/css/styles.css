@@ -1,0 +1,163 @@
+/* General page styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styling */
+.header {
+    background-color: #41AB5D; /* Green header */
+    color: white;
+    padding: 14px; /* Reduced padding to make the header thinner */
+    position: relative;
+    display: flex;
+    justify-content: center; /* Center the date header */
+    align-items: center; /* Vertically center the header content */
+}
+
+/* Date header font size increase and remove bold */
+#date-header {
+    font-size: calc(100% + 50%);
+    font-weight: normal;
+    margin: 0;
+}
+
+/* Navigation links styling */
+.nav-links {
+    position: absolute;
+    width: calc(100% - 40px); /* Make sure it spans across the green banner with 20px padding */
+    display: flex;
+    justify-content: space-between; /* Space between the left and right sides */
+    top: 50%;
+    transform: translateY(-50%); /* Vertically center the navigation links */
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Left side links (Save List, New List, List History) */
+.nav-left {
+    display: flex;
+    gap: 15px;
+    align-items: center; /* Ensures vertical alignment */
+}
+
+/* Right side links (Log In/Log Out) */
+.nav-right {
+    display: flex;
+    gap: 15px;
+    align-items: center; /* Ensures vertical alignment */
+}
+
+/* Styling for the navigation links */
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+/* Button to save the list */
+.save-list-btn {
+    background-color: #41AB5D;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+    align-self: center;
+}
+
+/* Main content styling */
+.content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Input box for new tasks */
+.new-task-input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Styling the task list */
+.task-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+/* Styling individual task items */
+.task-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 10px;
+    position: relative;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/* Drag handle for reordering tasks */
+.drag-handle {
+    cursor: move;
+    font-size: 24px;
+    color: #ccc;
+    margin-right: 10px;
+}
+
+/* Checkbox for task completion */
+.task-checkbox {
+    margin-right: 10px;
+}
+
+/* Styling for the task name */
+.task-name {
+    flex: 1;
+    overflow: hidden;
+    padding: 0;
+}
+
+/* Input field when editing a task */
+.edit-input {
+    padding: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: inherit;
+}
+
+/* Styling for the delete button */
+.delete-task {
+    color: #ff4d4d;
+    margin-left: 15px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-task:hover {
+    color: #ff1a1a;
+}
+
+/* Footer with the thin green border */
+.footer {
+    background-color: #41AB5D;
+    height: 4px;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
